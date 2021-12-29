@@ -41,6 +41,11 @@ export default function StoreCategories({route, navigation}) {
     navigation.navigate("StoreItems", {name: name, address: address, logo: logo, category: item.name })
   }
 
+  const resizeImage = (url) => {
+    var new_url = url.replace("https://firebasestorage.googleapis.com/v0/b/hobbloo-4e226.appspot.com/", "https://ik.imagekit.io/13avkwpfpv6/")
+    return new_url
+  }
+
 
   return (
     <View style={styles.container}>
@@ -51,7 +56,7 @@ export default function StoreCategories({route, navigation}) {
           <View style={{alignItems: "center", marginBottom: 20}}>
             <View style={styles.btn}>
               <TouchableOpacity style={{overflow: "hidden", borderRadius: 5}} onPress={() => ItemNavigate(item)}>
-              <ImageBackground resizeMode="cover" source={{uri: item.logoUrl}} style={{height: screenHeight*0.13, width: screenWidth*0.9}} >
+              <ImageBackground resizeMode="cover" source={{uri: resizeImage(item.logoUrl)}} style={{height: screenHeight*0.13, width: screenWidth*0.9}} >
                 {available.includes(item.name)? (<View style={{top: 10, right: 10, position: "absolute"}}><Ionicons name="checkmark-circle" color="green" size={35} /></View>):(<View/>)}
                 <Text style={{fontSize: 17, color: "#fff", position: "absolute", bottom: 15, left: 15, fontWeight: "bold"}}>{item.name}</Text>
               </ImageBackground>

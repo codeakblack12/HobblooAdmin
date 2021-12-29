@@ -1,29 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Dimensions, Platform } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-
-//import stores
-import AddStore from './storesPages/addStore';
-import EditStore from './storesPages/editStore';
+import AddSubCategory from './subcategoryPages/addsubcategory';
+import EditSubCategory from './subcategoryPages/editsubcategory'
 
 var screenWidth = Dimensions.get('window').width;
 var screenHeight = Dimensions.get('window').height;
 
-export default function Store() {
-
-  const [activityopen, setactivityOpen] = useState(false);
-  const [activityvalue, setactivityValue] = useState("");
-  const [activity, setActivity] = useState([
-    {label: 'Add', value: 'add'},
-    {label: 'Edit', value: 'edit'}
-  ]);
-
-  const [uploading, setUploading] = useState(false);
-  GLOBAL.uploading = uploading
-  GLOBAL.setUploading = setUploading
-
+export default function SubCategory() {
+    const [activityopen, setactivityOpen] = useState(false);
+    const [activityvalue, setactivityValue] = useState('male');
+    const [activity, setActivity] = useState([
+      {label: 'Add', value: 'add'},
+      {label: 'Edit', value: 'edit'}
+    ]);
+    
   return (
     <View style={styles.container}>
       {Platform.OS !== 'android'?(<View style={{zIndex: 1000}}>
@@ -61,8 +54,8 @@ export default function Store() {
         />
         </View>
       )}
-      <View style={{alignItems: "center", justifyContent: "center", flex: 1}}>
-        {activityvalue=="add"?(<AddStore/>):(activityvalue=="edit"?(<EditStore/>):(<Text style={{fontSize: 15, color: "#fff"}}>Please select an activity!</Text>))}
+      <View style={{alignItems: "center", justifyContent: "center", flex: 1, zIndex: 1}}>
+        {activityvalue=="add"?(<AddSubCategory/>):(activityvalue=="edit"?(<EditSubCategory/>):(<Text style={{fontSize: 15, color: "black"}}>Please select an activity!</Text>))}
       </View>
     </View>
   );
@@ -71,8 +64,8 @@ export default function Store() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#001027',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: "flex-start",
+    justifyContent: 'center',
   },
 });

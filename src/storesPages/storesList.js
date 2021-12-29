@@ -30,6 +30,11 @@ export default function StoresList({navigation}) {
     navigation.navigate("StoreCategories", {name: item.name, address: item.address, logo: item.logoUrl })
   }
 
+  const resizeImage = (url) => {
+    var new_url = url.replace("https://firebasestorage.googleapis.com/v0/b/hobbloo-4e226.appspot.com/", "https://ik.imagekit.io/13avkwpfpv6/")
+    return new_url
+  }
+
   const randColor = () => {
     var colors = ["#EC3539", "#F16136", "#007A3E", "#DA2418", "#D41F42", "#008080", "#1E90FF", "#4B0082", "#800080", "#FF00FF", "#8B4513"]
     /*var colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
@@ -56,7 +61,7 @@ export default function StoresList({navigation}) {
             renderItem={({ item }) =>
               <TouchableOpacity onPress={() => CategoryNavigate(item)} style={[styles.pbtnStyle, {backgroundColor: randColor()}]}>
                 <View style={{height: screenHeight*0.15, width: screenHeight*0.15, borderRadius: 15, overflow: "hidden", backgroundColor: "#fff", marginRight: 5}}>
-                  <ImageBackground resizeMode="contain" source={{uri: item.logoUrl}} style={{height: screenHeight*0.15, width: screenHeight*0.15}} >
+                  <ImageBackground resizeMode="contain" source={{uri: resizeImage(item.logoUrl)}} style={{height: screenHeight*0.15, width: screenHeight*0.15}} >
                   </ImageBackground>
                 </View>
                 <View style={{width: screenWidth*0.5, alignItems: "flex-start", marginTop: 10}}>

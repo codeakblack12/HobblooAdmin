@@ -23,15 +23,16 @@ export default function AddItem() {
 
     const [categoryopen, setcategoryOpen] = useState(false);
     const [categoryvalue, setcategoryValue] = useState(null);
-    const [category, setCategory] = useState([
-      {label: 'Category1', value: 'Category1'},
-      {label: 'Category2', value: 'Category2'},
-    ]);
-
     const [categories, setCategories] = useState([])
 
+    const [subcategoryopen, setsubcategoryOpen] = useState(false);
+    const [subcategoryvalue, setsubcategoryValue] = useState(null);
+    const [subcategories, setsubCategories] = useState([])
+
+    
+
     const AddStore = () => {
-        if(name == "" || logo == null){
+        if(name == "" || logo == null || categoryvalue == null || subcategoryvalue == null){
             alert("Please complete all fields!")
         }else{
             _handleStoreUpload()
@@ -59,9 +60,6 @@ export default function AddItem() {
           }else{
             setCategories([])
           }
-          
-          //console.log(Object.values(snapshot.val()))
-          //console.log(categories)
         });
       }
     
@@ -78,6 +76,7 @@ export default function AddItem() {
                 name: name,
                 logoUrl: uploadUrl,
                 category: categoryvalue,
+                subcategory: subcategoryvalue,
               }).then(() => {
                 alert("Item Added!")
               }).catch((error) => {
@@ -120,6 +119,25 @@ export default function AddItem() {
       }
     };
 
+    const readsubCategoryData = async () => {
+      firebase.database().ref('Hobbloo Data/Categories/' + categoryvalue + '/Subcategories').on('value', function (snapshot) {
+        if(snapshot.val() != null){
+          let values = [];
+          snapshot.forEach((child) => {
+              values.push(child.val());
+          });
+          //console.log(values)
+          var subValues = []
+          for(var i=0; i<values.length;i++){
+              subValues.push(values[i].name)
+          }
+          setsubCategories(toArray(subValues))
+        }else{
+          setsubCategories([])
+        }
+      });
+    }
+
   return (
     <View style={styles.container}>
         <TextInput style={styles.inputBox} placeholderTextColor='#A3A3A3' placeholder="Name" color="black" onChangeText={text => setName(text)}/>
@@ -143,12 +161,28 @@ export default function AddItem() {
               open={categoryopen}
               setOpen={setcategoryOpen}
               placeholder="Category"
+              onChangeValue={() => readsubCategoryData()}
               zIndex={5000}
               defaultIndex={0}
               style={{borderColor: "#BDBDBD", paddingLeft: 17}}
               textStyle={{color: '#575757'}}
               containerStyle={{height: screenHeight * 0.055, width: screenWidth * 0.78, marginTop: 20}}
-              dropDownContainerStyle={{backgroundColor: '#fff', zIndex: 1000, elevation: 1000, borderColor: "#BDBDBD", maxHeight: 500}}
+              dropDownContainerStyle={{backgroundColor: '#fff', zIndex: 1000, elevation: 1000, borderColor: "#BDBDBD", maxHeight: 200}}
+        />
+        <DropDownPicker
+              items ={subcategories}
+              setItems={setsubCategories}
+              value={subcategoryvalue}
+              setValue={setsubcategoryValue}
+              open={subcategoryopen}
+              setOpen={setsubcategoryOpen}
+              placeholder="Sub Category"
+              zIndex={4000}
+              defaultIndex={0}
+              style={{borderColor: "#BDBDBD", paddingLeft: 17}}
+              textStyle={{color: '#575757'}}
+              containerStyle={{height: screenHeight * 0.055, width: screenWidth * 0.78, marginTop: 20}}
+              dropDownContainerStyle={{backgroundColor: '#fff', zIndex: 900, elevation: 900, borderColor: "#BDBDBD", maxHeight: 100}}
         />
         <TouchableOpacity onPress={() => AddStore()} disabled={pinstatus} style={{width: screenWidth * 0.78, height: screenHeight * 0.06, borderRadius: 10, backgroundColor: "#21B3E9", alignItems: "center", justifyContent: "center", marginTop: 20}}>
             {pinstatus?(<ActivityIndicator size="small" />):(<Text style={{color: "#fff"}}>Add Item!</Text>)}

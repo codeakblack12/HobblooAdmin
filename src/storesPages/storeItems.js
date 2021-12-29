@@ -85,7 +85,7 @@ export default function StoreItems({route, navigation}) {
         "",
         "number-pad"
       );
-};
+    };
 
 const HandleStock = (itemname, itemprice) => {
     if(itemprice < 1){
@@ -124,6 +124,11 @@ const numberFormat = (value) => {
     return dataList
 }
 
+const resizeImage = (url) => {
+  var new_url = url.replace("https://firebasestorage.googleapis.com/v0/b/hobbloo-4e226.appspot.com/", "https://ik.imagekit.io/13avkwpfpv6/")
+  return new_url
+}
+
   const _renderItem = ({item, index}) => {
     let {itemStyle, itemText, itemInvisible, btnStyle} = styles
     if (item.empty){
@@ -132,7 +137,7 @@ const numberFormat = (value) => {
     return (
         <View style={{alignItems: "center", marginBottom: 20}}>
         <View style={{width: screenWidth*0.4, height: screenHeight*0.3, backgroundColor: "#fff", marginHorizontal: 15, marginTop: 10, borderRadius: 15, alignItems: "center" }}>
-          <Image resizeMode="contain" source={{uri: item.logoUrl}} style={{height: screenHeight*0.25, width: screenWidth*0.4}} />
+          <Image resizeMode="contain" source={{uri: resizeImage(item.logoUrl)}} style={{height: screenHeight*0.25, width: screenWidth*0.4}} />
           <Text style={{fontSize: 12, textAlign: "center", fontWeight: "500"}}>{item.name}</Text>
           <Text style={{color: "#707272", fontSize: 10}}>{item.category}</Text>
         </View>

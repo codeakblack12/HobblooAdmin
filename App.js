@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {FontAwesome5, AntDesign, Ionicons} from "@expo/vector-icons"
+import {FontAwesome5, AntDesign, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons"
 import * as SplashScreen from 'expo-splash-screen'
 import * as ImagePicker from 'expo-image-picker';
 
@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Store from "./src/store"
 import Category from "./src/category"
+import SubCategory from "./src/subcategory"
 import Item from "./src/item"
 
 SplashScreen.preventAutoHideAsync();
@@ -48,6 +49,13 @@ export default function App() {
           tabBarLabel: 'Category',
           tabBarIcon: ({ color, size }) => (
               <AntDesign name="appstore1" color={color} size={size} />
+          ),
+          headerStyle: {backgroundColor: '#21B3E9', shadowColor: "transparent"},
+        }}/>
+        <Tab.Screen name="Sub Category" component={SubCategory} options={{
+          tabBarLabel: 'Sub Category',
+          tabBarIcon: ({ color, size }) => (
+              <Ionicons name="md-apps-outline" color={color} size={27} />
           ),
           headerStyle: {backgroundColor: '#21B3E9', shadowColor: "transparent"},
         }}/>

@@ -57,6 +57,11 @@ export default function EditItem() {
         return dataList
     }
 
+    const resizeImage = (url) => {
+      var new_url = url.replace("https://firebasestorage.googleapis.com/v0/b/hobbloo-4e226.appspot.com/", "https://ik.imagekit.io/13avkwpfpv6/")
+      return new_url
+    }
+
     const _renderItem = ({item, index}) => {
         let {itemStyle, itemText, itemInvisible, btnStyle} = styles
         if (item.empty){
@@ -65,9 +70,9 @@ export default function EditItem() {
         return (
             <View style={{alignItems: "center", marginBottom: 20}}>
             <View style={{width: screenWidth*0.4, height: screenHeight*0.3, backgroundColor: "#fff", marginHorizontal: 15, marginTop: 10, borderRadius: 15, alignItems: "center", marginBottom: 7, paddingVertical: 0}}>
-              <Image resizeMode="contain" source={{uri: item.logoUrl}} style={{height: screenHeight*0.25, width: screenWidth*0.4}} />
+              <Image resizeMode="contain" source={{uri: resizeImage(item.logoUrl)}} style={{height: screenHeight*0.25, width: screenWidth*0.4}} />
               <Text style={{fontSize: 12, textAlign: "center", fontWeight: "500"}}>{item.name}</Text>
-              <Text style={{color: "#707272", fontSize: 10}}>{item.category}</Text>
+              {item.subcategory != null? (<Text style={{color: "#707272", fontSize: 10}}>{item.category} - {item.subcategory}</Text>):(<Text style={{color: "#707272", fontSize: 10}}>{item.category}</Text>)}
             </View>
             <TouchableOpacity onPress={() => Delete(item.name, item.logoUrl)} style={{width: screenWidth*0.4, height: screenHeight*0.05, backgroundColor: "#29ABE2", alignItems: "center", borderRadius: 10, justifyContent: "center", marginTop: 5}}>
                   <Text style={{color: "#fff", fontWeight: "bold"}}>Delete</Text>
